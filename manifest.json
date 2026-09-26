@@ -1,0 +1,56 @@
+{
+  "manifest_version": 2,
+  "name": "JVC Forum History Cleaner",
+  "version": "1.1.1",
+  "description": "Prévisualisez, filtrez et supprimez en masse vos propres messages de forums Jeuxvideo.com, depuis n’importe quel onglet.",
+  "icons": {
+    "32": "icons/icon-32.png",
+    "48": "icons/icon-48.png",
+    "96": "icons/icon-96.png",
+    "128": "icons/icon-128.png"
+  },
+  "permissions": [
+    "storage",
+    "tabs",
+    "https://www.jeuxvideo.com/*"
+  ],
+  "background": {
+    "scripts": [
+      "background.js"
+    ],
+    "persistent": true
+  },
+  "browser_action": {
+    "default_title": "JVC Forum History Cleaner",
+    "default_icon": {
+      "32": "icons/icon-32.png",
+      "48": "icons/icon-48.png"
+    },
+    "default_popup": "popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.jeuxvideo.com/*"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "web_accessible_resources": [
+    "page-bridge.js"
+  ],
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "jvc-forum-history-cleaner@jvcleaner",
+      "strict_min_version": "128.0",
+      "data_collection_permissions": {
+        "required": [
+          "none"
+        ]
+      }
+    }
+  }
+}

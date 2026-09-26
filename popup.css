@@ -1,0 +1,83 @@
+:root {
+  color-scheme: dark;
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: #101214;
+  color: #f5f7f8;
+}
+* { box-sizing: border-box; }
+body { margin: 0; width: 440px; max-height: 650px; overflow-y: auto; background: #101214; color: #f5f7f8; }
+main { padding: 14px; }
+.topbar { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 12px; }
+.brand { display: flex; align-items: center; gap: 11px; min-width: 0; }
+.logo { width: 42px; height: 42px; border-radius: 10px; flex: none; }
+h1 { margin: 0 0 3px; font-size: 15px; line-height: 1.2; }
+h2 { margin: 0; font-size: 13px; }
+p { margin: 0; }
+#connection-status { color: #9ba5ad; font-size: 11px; }
+button { font: inherit; }
+button:disabled { opacity: .43; cursor: default !important; }
+.icon-button { width: 32px; height: 32px; display: inline-grid; place-items: center; border: 1px solid #343a40; border-radius: 8px; background: #1b2024; color: #eef2f4; font-size: 17px; font-weight: 800; cursor: pointer; }
+.card, .runtime-card { border: 1px solid #30363c; background: #171b1f; border-radius: 11px; padding: 11px; }
+.connection-card { color: #d0d6da; font-size: 12px; }
+.button-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.button-row.compact { margin-top: 9px; }
+.notice { margin-bottom: 10px; padding: 9px 10px; border: 1px solid #70402f; background: #2a211d; color: #ffd1c4; border-radius: 9px; font-size: 12px; }
+.toolbar { display: flex; justify-content: space-between; gap: 8px; margin: 0 2px 9px; }
+.link-button { padding: 0; border: 0; background: transparent; color: #ff967c; cursor: pointer; font-size: 11px; }
+fieldset { border: 1px solid #30363c; border-radius: 10px; padding: 10px; margin: 0 0 10px; }
+legend { padding: 0 5px; color: #b7c0c7; font-size: 12px; font-weight: 800; }
+label { display: block; color: #ccd3d8; font-size: 11px; margin-bottom: 8px; }
+label:last-child { margin-bottom: 0; }
+input[type="text"], input[type="number"], input[type="date"], textarea {
+  width: 100%; margin-top: 4px; border: 1px solid #3a4249; border-radius: 7px; background: #0d1012; color: #fff; padding: 7px 8px; font: inherit;
+}
+textarea { resize: vertical; min-height: 52px; }
+.check { display: flex; align-items: center; gap: 7px; font-size: 12px; }
+.check input { margin: 0; }
+.grid-two { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.mini-help { margin-left: 4px; width: 19px; height: 19px; border: 1px solid #40484f; border-radius: 50%; background: transparent; color: #adb7be; cursor: pointer; font-size: 11px; font-weight: 800; }
+details { margin-bottom: 10px; }
+summary { color: #b7c0c7; font-size: 11px; cursor: pointer; margin: 0 0 7px 3px; }
+.advanced-fieldset { margin-bottom: 0; }
+.help-text { color: #87929a; font-size: 10px; line-height: 1.4; }
+.runtime-card { margin-top: 2px; }
+#runtime-status { color: #d3d9dd; font-size: 11px; margin-bottom: 7px; }
+.progress { height: 5px; background: #282e33; border-radius: 999px; overflow: hidden; }
+.progress > div { height: 100%; width: 0; background: #ff5a36; transition: width .18s ease; }
+.stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-top: 9px; }
+.stats div { padding: 6px; border-radius: 7px; background: #101316; text-align: center; }
+.stats b { display: block; font-size: 15px; }
+.stats span { color: #8b969e; font-size: 9px; }
+.actions { display: grid; grid-template-columns: repeat(4, 1fr); gap: 7px; margin-top: 9px; }
+.actions.two { grid-template-columns: 1fr 1fr; }
+.primary, .secondary, .danger { border: 0; border-radius: 8px; padding: 9px 9px; font-weight: 800; cursor: pointer; }
+.primary { background: #ff5a36; color: white; }
+.secondary { background: #292f34; color: white; }
+.danger { background: #8f2f2f; color: white; }
+.full { width: 100%; }
+.results-section { margin-top: 13px; }
+.results-section h2 span { color: #7f8a92; font-weight: 500; font-size: 10px; }
+.preview-list { max-height: 150px; overflow: auto; margin-top: 7px; border: 1px solid #282e33; border-radius: 8px; padding: 0 7px; background: #0b0e10; }
+.preview-item { padding: 7px 0; border-top: 1px solid #252b30; font-size: 10px; }
+.preview-item:first-child { border-top: 0; }
+.preview-item a { color: #ff9b82; text-decoration: none; font-weight: 800; }
+.preview-item small { display: block; color: #89939b; margin: 2px 0 3px; }
+.empty { color: #77828a; padding: 10px 2px; font-size: 10px; }
+.log { height: 125px; overflow: auto; margin-top: 7px; background: #0b0e10; border: 1px solid #282e33; border-radius: 8px; padding: 7px; color: #c8d0d5; font: 10px/1.45 ui-monospace, SFMono-Regular, Menlo, monospace; white-space: pre-wrap; }
+.log-line.ok { color: #8ed7a6; }
+.log-line.warn { color: #e8c47c; }
+.log-line.error { color: #ef8d8d; }
+.session-note { margin-top: 10px; color: #748089; font-size: 9px; line-height: 1.4; }
+.modal[hidden] { display: none; }
+.modal { position: fixed; inset: 0; z-index: 100; }
+.modal-backdrop { position: absolute; inset: 0; background: rgba(0,0,0,.68); }
+.modal-panel { position: relative; z-index: 1; width: calc(100% - 28px); max-height: calc(100vh - 28px); overflow: auto; margin: 14px; padding: 14px; border: 1px solid #3a4248; border-radius: 13px; background: #15191d; box-shadow: 0 18px 50px rgba(0,0,0,.5); }
+.modal-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; margin-bottom: 12px; }
+.modal-header h2 { font-size: 16px; }
+.modal-header p { margin-top: 3px; color: #87929a; font-size: 10px; }
+.tutorial-block { margin-bottom: 12px; padding: 10px; border: 1px solid #30373d; border-radius: 9px; background: #101316; }
+.step { display: block; margin-bottom: 7px; color: #cbd3d8; font-size: 11px; font-weight: 800; }
+.tutorial-block code { display: block; padding: 8px; overflow-wrap: anywhere; border-radius: 6px; background: #090b0d; color: #d7dde1; font-size: 10px; line-height: 1.55; }
+.tutorial-block mark { background: #67351f; color: #ffd4c4; border-radius: 3px; padding: 1px 2px; }
+.tutorial-block p { margin-top: 7px; color: #aeb8bf; font-size: 10px; line-height: 1.5; }
+.tutorial-tip { margin-bottom: 12px; padding: 9px; border-radius: 8px; background: #1b2422; color: #b9d8cd; font-size: 10px; line-height: 1.45; }

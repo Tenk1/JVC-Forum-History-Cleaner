@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>JVC Forum History Cleaner</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <main>
+    <header class="topbar">
+      <div class="brand">
+        <img class="logo" src="icons/icon-48.png" alt="">
+        <div>
+          <h1>JVC Forum History Cleaner</h1>
+          <p id="connection-status">Connexion à Jeuxvideo.com…</p>
+        </div>
+      </div>
+      <button id="open-tutorial" class="icon-button" type="button" title="Comment trouver les IDs ?">?</button>
+    </header>
+
+    <section id="connection-card" class="card connection-card">
+      <div id="connection-message">Vérification de ta session JVC…</div>
+      <div class="button-row compact">
+        <button id="retry-session" class="secondary" type="button">Réessayer</button>
+        <button id="open-jvc" class="primary" type="button">Ouvrir JVC</button>
+      </div>
+    </section>
+
+    <section id="cleaner" hidden>
+      <div class="notice">
+        La suppression est définitive. Fais d’abord une <b>simulation</b> pour vérifier les filtres.
+      </div>
+
+      <div class="toolbar">
+        <button id="open-history" class="link-button" type="button">Voir mon historique JVC ↗</button>
+        <button id="tutorial-inline" class="link-button" type="button">Comment trouver les IDs ?</button>
+      </div>
+
+      <fieldset>
+        <legend>Mode et dates</legend>
+        <label class="check"><input id="dry" type="checkbox" checked> Simulation / Dry Run</label>
+        <div class="grid-two">
+          <label>À partir du <input id="from" type="date"></label>
+          <label>Jusqu’au <input id="to" type="date"></label>
+        </div>
+        <label>Supprimer seulement si le message fait moins de N caractères
+          <input id="max-length" type="number" min="0" placeholder="vide = aucune limite">
+        </label>
+      </fieldset>
+
+      <fieldset>
+        <legend>Forums <button class="mini-help" data-tutorial="forum" type="button">?</button></legend>
+        <label>Inclure uniquement ces IDs de forum
+          <input id="include-forums" type="text" placeholder="ex. 12345, 67890">
+        </label>
+        <label>Exclure ces IDs de forum
+          <input id="exclude-forums" type="text" placeholder="ex. 12345, 67890">
+        </label>
+      </fieldset>
+
+      <fieldset>
+        <legend>Éléments à conserver <button class="mini-help" data-tutorial="message" type="button">?</button></legend>
+        <label>Messages à garder — IDs ou URLs
+          <textarea id="keep-messages" placeholder="ex. 1234567890 ou une URL de message"></textarea>
+        </label>
+        <label>Topics à garder — IDs ou URLs
+          <textarea id="keep-topics" placeholder="ex. 98765432 ou une URL de topic"></textarea>
+        </label>
+      </fieldset>
+
+      <details>
+        <summary>Réglages avancés</summary>
+        <fieldset class="advanced-fieldset">
+          <label>Délai entre les lots (ms)
+            <input id="delay" type="number" min="500" step="100" value="1600">
+          </label>
+          <p class="help-text">1600 ms par défaut. En cas de limitation côté JVC, la lecture est retentée automatiquement.</p>
+        </fieldset>
+      </details>
+
+      <div class="runtime-card">
+        <div id="runtime-status">Prêt.</div>
+        <div class="progress"><div id="progress-bar"></div></div>
+        <div class="stats">
+          <div><b id="scanned">0</b><span>scannés</span></div>
+          <div><b id="matched">0</b><span>ciblés</span></div>
+          <div><b id="deleted">0</b><span>supprimés</span></div>
+          <div><b id="failed">0</b><span>échecs</span></div>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button id="start" class="primary" type="button">Lancer</button>
+        <button id="pause" class="secondary" type="button" disabled>Pause</button>
+        <button id="resume" class="secondary" type="button" disabled>Reprendre</button>
+        <button id="stop" class="danger" type="button" disabled>Stop</button>
+      </div>
+      <div class="actions two">
+        <button id="export" class="secondary" type="button">Exporter le journal</button>
+        <button id="clear" class="secondary" type="button">Effacer</button>
+      </div>
+
+      <section class="results-section">
+        <h2>Aperçu <span>(max 100)</span></h2>
+        <div id="preview" class="preview-list"><p class="empty">Aucun résultat pour le moment.</p></div>
+      </section>
+
+      <section class="results-section">
+        <h2>Journal</h2>
+        <div id="log" class="log"></div>
+      </section>
+    </section>
+
+    <p class="session-note">Tu peux ouvrir ce popup depuis n’importe quel site. L’extension utilise une page JVC inactive pour réutiliser uniquement ta session connectée.</p>
+  </main>
+
+  <div id="tutorial" class="modal" hidden>
+    <div class="modal-backdrop" data-close-tutorial></div>
+    <section class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="tutorial-title">
+      <header class="modal-header">
+        <div>
+          <h2 id="tutorial-title">Trouver les IDs JVC</h2>
+          <p>Tout se lit directement dans les URLs.</p>
+        </div>
+        <button class="icon-button" id="close-tutorial" type="button" aria-label="Fermer">×</button>
+      </header>
+
+      <div class="tutorial-block" id="tutorial-forum">
+        <span class="step">Forum + topic</span>
+        <code>https://www.jeuxvideo.com/forums/42-<mark>12345</mark>-<mark>98765432</mark>-1-0-1-0-exemple.htm</code>
+        <p><b>12345</b> = ID du forum<br><b>98765432</b> = ID du topic</p>
+      </div>
+
+      <div class="tutorial-block" id="tutorial-message">
+        <span class="step">Message</span>
+        <code>https://www.jeuxvideo.com/forums/message/<mark>1234567890</mark></code>
+        <p><b>1234567890</b> = ID du message.</p>
+        <code>…/un-topic.htm#post_<mark>1234567890</mark></code>
+        <p>L’ID après <b>#post_</b> est également l’ID du message.</p>
+      </div>
+
+      <div class="tutorial-tip">
+        <b>Astuce :</b> pour « Messages à garder » et « Topics à garder », tu peux coller directement l’URL complète. L’extension extrait l’ID toute seule.
+      </div>
+
+      <button id="tutorial-done" class="primary full" type="button">Compris</button>
+    </section>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
